@@ -1,0 +1,41 @@
+[browser]
+headless = false
+args = [
+        '--no-sandbox',
+        '--disable-blink-features=AutomationControlled',
+        '--disable-dev-shm-usage',
+        '--disable-web-security',
+        '--disable-features=VizDisplayCompositor',
+        '--disable-plugins-discovery',
+        '--disable-default-apps',
+        '--disable-background-timer-throttling',
+        '--disable-backgrounding-occluded-windows',
+        '--disable-renderer-backgrounding',
+        '--disable-field-trial-config',
+        '--disable-back-forward-cache',
+        '--disable-ipc-flooding-protection',
+        '--no-first-run',
+        '--no-default-browser-check',
+        '--disable-component-extensions-with-background-pages',
+        '--disable-background-networking',
+        '--disable-sync',
+        '--metrics-recording-only',
+        '--no-report-upload',
+        '--disable-logging',
+        '--disable-gpu-logging',
+        '--silent',
+        '--disable-gpu',
+        '--disable-software-rasterizer',
+        '--disable-background-timer-throttling',
+        '--disable-client-side-phishing-detection',
+        '--disable-hang-monitor',
+        '--disable-prompt-on-repost',
+        '--disable-domain-reliability',
+        '--disable-component-update',
+        '--disable-features=TranslateUI',
+        '--disable-ipc-flooding-protection',
+    ]
+
+[context]
+user_data_dir = "./chrome_user_data"
+user_agent = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36"
