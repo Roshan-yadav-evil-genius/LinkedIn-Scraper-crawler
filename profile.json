@@ -1,41 +1,237 @@
-{
-  "name": "Dr. DS Chauhan",
-  "headline": "Director- Federation of Community Development and Academic Administrator",
-  "location": "Chandigarh, India",
-  "followers": "1,016,561 followers",
-  "connections": "500+ connections",
-  "about": "",
-  "experience": [
-    {
-      "title": "NIMS University",
-      "subtitle": "Full-time \u00b7 15 yrs 5 mos",
-      "meta_1": "Associate Professor",
-      "meta_2": "Apr 2023 - Present \u00b7 2 yrs 9 mos"
-    },
-    {
-      "title": "Director",
-      "subtitle": "Federation of Community Development \u00b7 Full-time",
-      "meta_1": "Dec 2021 - Present \u00b7 4 yrs 1 mo"
-    },
-    {
-      "title": "Quality Assurance Officer",
-      "subtitle": "Nestle India Limited \u00b7 Full-time",
-      "meta_1": "Sep 2009 - Aug 2010 \u00b7 1 yr",
-      "meta_2": "Punjab"
+[
+  {
+    "filename": "profile1.html",
+    "status": "success",
+    "data": {
+      "name": "Dr. DS Chauhan",
+      "headline": "Director- Federation of Community Development and Academic Administrator",
+      "location": "Chandigarh, India",
+      "followers": "1,016,561 followers",
+      "connections": "500+ connections",
+      "about": "",
+      "experience": [
+        {
+          "title": "NIMS University",
+          "subtitle": "Full-time \u00b7 15 yrs 5 mos",
+          "meta_1": "Associate Professor",
+          "meta_2": "Apr 2023 - Present \u00b7 2 yrs 9 mos"
+        },
+        {
+          "title": "Director",
+          "subtitle": "Federation of Community Development \u00b7 Full-time",
+          "meta_1": "Dec 2021 - Present \u00b7 4 yrs 1 mo"
+        },
+        {
+          "title": "Quality Assurance Officer",
+          "subtitle": "Nestle India Limited \u00b7 Full-time",
+          "meta_1": "Sep 2009 - Aug 2010 \u00b7 1 yr",
+          "meta_2": "Punjab"
+        }
+      ],
+      "education": [
+        {
+          "title": "Chaudhary Charan Singh University",
+          "subtitle": "Master of Science (M.Sc.), Biotechnology",
+          "meta_1": "2004 - 2009"
+        },
+        {
+          "title": "DAV College, Muzaffarnagar"
+        }
+      ],
+      "skills": [
+        "Plant Tissue Culture",
+        "RAPD"
+      ]
     }
-  ],
-  "education": [
-    {
-      "title": "Chaudhary Charan Singh University",
-      "subtitle": "Master of Science (M.Sc.), Biotechnology",
-      "meta_1": "2004 - 2009"
-    },
-    {
-      "title": "DAV College, Muzaffarnagar"
+  },
+  {
+    "filename": "profile2.html",
+    "status": "success",
+    "data": {
+      "name": "Akrati Pandey",
+      "headline": "Scrum Master",
+      "location": "India",
+      "followers": "754,425 followers",
+      "connections": "500+ connections",
+      "about": "Certified Scrum Master with strong experience owning all stages of the life cycle to deliver projects that exceed expectations on time and on budget. Skilled in using benchmarks, industry metrics, and innovative methodologies to manage sensitive projects with high-performing teams. Possess extensive knowledge in Agile, Scrum and Kanban, as well as SAFe and capable of driving an overwhelming adoption and enforcement of scrum rules and practices. Demonstrated ability to motivate, organize, lead, and coach leadership and product teams across multiple locations with a proven track record of driving complex projects. I am eager to join a highly collaborative and energetic team and believe my extensive knowledge and experience would benefit any team.",
+      "experience": [
+        {
+          "title": "Scrum Master",
+          "subtitle": "Rotary International \u00b7 Full-time",
+          "meta_1": "Nov 2025 - Present \u00b7 2 mos",
+          "meta_2": "Pune, Maharashtra, India \u00b7 Hybrid"
+        },
+        {
+          "title": "Project Manager Scrum Master",
+          "subtitle": "Techmicra Data Systems",
+          "meta_1": "May 2024 - Jul 2025 \u00b7 1 yr 3 mos"
+        },
+        {
+          "title": "Project Manager Scrum Master",
+          "subtitle": "JivaForce Corporation  \u00b7 Full-time",
+          "meta_1": "Aug 2022 - Mar 2024 \u00b7 1 yr 8 mos",
+          "meta_2": "Pune, Maharashtra, India \u00b7 Hybrid"
+        },
+        {
+          "title": "Project Manager Scrum Master",
+          "subtitle": "Techmicra Data Systems \u00b7 Full-time",
+          "meta_1": "Feb 2021 - Aug 2022 \u00b7 1 yr 7 mos",
+          "meta_2": "Ahmedabad, Gujarat, India \u00b7 Hybrid"
+        },
+        {
+          "title": "Scrum Master",
+          "subtitle": "12th Wonder \u00b7 Full-time",
+          "meta_1": "Jul 2020 - Feb 2021 \u00b7 8 mos",
+          "meta_2": "Pune, Maharashtra, India"
+        }
+      ],
+      "education": [
+        {
+          "title": "Confidential",
+          "subtitle": "High School, PCM",
+          "meta_1": "2009 - 2010",
+          "meta_2": "Grade: 55.6"
+        },
+        {
+          "title": "Confidential",
+          "subtitle": "Bachelor\u2019s Degree, Computer Engineering",
+          "meta_1": "2010 - 2014",
+          "meta_2": "Grade: A"
+        }
+      ],
+      "skills": [
+        "scrum",
+        "Agile Methodologies"
+      ]
     }
-  ],
-  "skills": [
-    "Plant Tissue Culture",
-    "RAPD"
-  ]
-}
+  },
+  {
+    "filename": "profile3.html",
+    "status": "success",
+    "data": {
+      "name": "Shivani Khatri",
+      "headline": "23x LinkedIn Top Voice | Saved \u20b91M+ in ad spends | 2X Marketing ROI with organic content | Helping founders to scale up business | Brand Strategist | Social Media Marketing | PPC Expert | Branding",
+      "location": "Ahmedabad, Gujarat, India",
+      "followers": "30,558 followers",
+      "connections": "500+ connections",
+      "about": "PPC Specialist | Digital Marketing | Personal Branding | Content creation & Shoots | Meta Ads | Business Strategy | Marketing Strategy | Social Media Marketing | Google Ads | Brand Strategist | Performance Marketing | Branding - rebranding | Graphic designing | Product Photography Helping businesses from concept to execution! Have a business idea? Lets connect!",
+      "experience": [
+        {
+          "title": "Head of Digital Marketing",
+          "subtitle": "ZonForce Technology \u00b7 Full-time",
+          "meta_1": "Nov 2024 - Present \u00b7 1 yr 2 mos",
+          "meta_2": "Ahmedabad, Gujarat, India \u00b7 On-site"
+        },
+        {
+          "title": "Creative Head",
+          "subtitle": "LTTRBX TECHNOLABS  \u00b7 Full-time",
+          "meta_1": "Mar 2024 - Sep 2024 \u00b7 7 mos",
+          "meta_2": "Ahmedabad, Gujarat, India \u00b7 On-site"
+        },
+        {
+          "title": "Content Creator & Digital Marketer",
+          "subtitle": "LabelCentric.com \u00b7 Full-time",
+          "meta_1": "Sep 2022 - Sep 2023 \u00b7 1 yr 1 mo",
+          "meta_2": "Bhavnagar, Gujarat, India"
+        },
+        {
+          "title": "Digital marketer & Sales Manager",
+          "subtitle": "Soda Punch Soda Machine \u00b7 Full-time",
+          "meta_1": "Nov 2019 - Sep 2022 \u00b7 2 yrs 11 mos",
+          "meta_2": "Bhavnagar, Gujarat, India"
+        }
+      ],
+      "education": [
+        {
+          "title": "Shree Sahajanand Institute of Management (SFI)-Bhavnagar 761",
+          "subtitle": "B.com, Account & Management",
+          "meta_1": "2018 - 2020"
+        }
+      ],
+      "skills": [
+        "Instagram Marketing",
+        "Personal Branding"
+      ]
+    }
+  },
+  {
+    "filename": "profile4.html",
+    "status": "success",
+    "data": {
+      "name": "Roshan Yadav",
+      "headline": "Associate Software Engineer | C++, Qt, Python, & SQL Specialist | Multithreaded Systems & Windows Platform Development",
+      "location": "Jaipur, Rajasthan, India",
+      "followers": "12,894 followers",
+      "connections": "",
+      "about": "",
+      "experience": [
+        {
+          "title": "12th Wonder",
+          "subtitle": "2 yrs 6 mos",
+          "meta_1": "Software Engineer",
+          "meta_2": "Full-time"
+        },
+        {
+          "title": "Freelance Software Engineer",
+          "subtitle": "Remote",
+          "meta_1": "Jun 2022 - Jun 2023 \u00b7 1 yr 1 mo",
+          "meta_2": "\u25cf Built web crawlers for 6 client websites (Python, Scrapy, Playwright) to automate large-scale data extraction and monitoring."
+        }
+      ],
+      "education": [
+        {
+          "title": "Chaudhary Charan Singh University",
+          "subtitle": "Bachelor of Technology, Electronics",
+          "meta_1": "75%"
+        }
+      ],
+      "skills": [
+        "Flask",
+        "GitHub"
+      ]
+    }
+  },
+  {
+    "filename": "profile5.html",
+    "status": "success",
+    "data": {
+      "name": "Vandana Yadav",
+      "headline": "Engineering Visionary  Creating AI-Driven Farms That Think, Decide & Deliver",
+      "location": "Meerut, Uttar Pradesh, India",
+      "followers": "1,388 followers",
+      "connections": "",
+      "about": "Agriculture is facing a transformation. Rising costs, unpredictable weather, and labor shortages are forcing landowners and agri-businesses to rethink how farming works. I\u2019m building MotherFarm to meet that challenge head-on. MotherFarm is an autonomous farming ecosystem designed to make intelligent decisions from seed selection to crop scheduling  based on real-time environmental data. It\u2019s not just automation; it\u2019s a system that thinks, adapts, and delivers measurable outcomes. My goal is simple: to help agri-businesses turn uncertainty into opportunity by making their land smarter, more productive, and future-ready. If you're exploring how AI can drive ROI in agriculture \u2014 let's connect.",
+      "experience": [],
+      "education": [
+        {
+          "title": "Chaudhary Charan Singh University (CCSU), Meerut",
+          "subtitle": "Bachelor of Technology - BTech, Computer Science",
+          "meta_1": "Oct 2023 - May 2027"
+        }
+      ],
+      "skills": [
+        "Python (Programming Language)"
+      ]
+    }
+  },
+  {
+    "filename": "profile6.html",
+    "status": "success",
+    "data": {
+      "name": "Mijat Xander Jysun Zhen",
+      "headline": "Student at Universiti Sains Malaysia",
+      "location": "Paya Terubong, Penang, Malaysia",
+      "followers": "111,340 followers",
+      "connections": "",
+      "about": "",
+      "experience": [],
+      "education": [
+        {
+          "title": "Universiti Sains Malaysia",
+          "subtitle": "2025 - 2029"
+        }
+      ],
+      "skills": []
+    }
+  }
+]

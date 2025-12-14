@@ -188,6 +188,8 @@ def main():
             )
 
     print(json.dumps(results, indent=2))
+    with open("profile.json", "w", encoding="utf-8") as f:
+        json.dump(results, f, indent=2)
 
 
 if __name__ == "__main__":

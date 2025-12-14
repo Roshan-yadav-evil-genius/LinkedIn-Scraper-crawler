@@ -1,7 +1,0 @@
-Found 1 elements with '500+'
-
-Element 1:
-Tag: span
-Attributes: {'class': 't-bold'}
-Text: 500+
-Parent: span ({'class': 't-black--light'})

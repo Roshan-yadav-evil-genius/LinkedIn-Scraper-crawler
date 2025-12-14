@@ -1,8 +1,7 @@
 import asyncio
 import sys
 import tomllib  # Python 3.11+
-from playwright.async_api import async_playwright
-from parser import parse_linkedin_profile
+from playwright.async_api import async_playwright, BrowserContext
 
 
 def load_config():
@@ -12,6 +11,15 @@ def load_config():
     except FileNotFoundError:
         print("❌ Error: 'config.toml' not found.")
         sys.exit(1)
+
+
+async def parse_linkedin_profile(context: BrowserContext):
+    page1 = await context.new_page()
+    await page1.goto("https://www.linkedin.com/in/roshan-yadav-4631272a8/")
+    await page1.wait_for_timeout(5000)
+    page_html = await page1.content()
+    with open("profiles/profile4.html", "w", encoding="utf-8") as f:
+        f.write(page_html)
 
 
 async def open_manual_browser():
