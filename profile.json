@@ -41,6 +41,26 @@
       "skills": [
         "Plant Tissue Culture",
         "RAPD"
+      ],
+      "licenses_and_certifications": [],
+      "volunteering": [],
+      "projects": [],
+      "honors_and_awards": [],
+      "languages": [],
+      "publications": [],
+      "recommendations": [
+        {
+          "title": "Dr Raghev Langeh",
+          "subtitle": "Entrepreneur I Education | Marketing | Admissions| Administration| Institutional SalesI OutReach Activities I Student Exchange",
+          "meta_1": "May 1, 2020,",
+          "meta_2": "Dr. DS"
+        },
+        {
+          "title": "Ritu Rathi",
+          "subtitle": ".",
+          "meta_1": "April 18, 2020,",
+          "meta_2": "Dr. DS"
+        }
       ]
     }
   },
@@ -102,6 +122,44 @@
       "skills": [
         "scrum",
         "Agile Methodologies"
+      ],
+      "licenses_and_certifications": [
+        {
+          "title": "ChatGPT for Beginners",
+          "subtitle": "Great Learning",
+          "meta_1": "Issued Aug 2023"
+        },
+        {
+          "title": "ChatGPT for HR",
+          "subtitle": "Great Learning",
+          "meta_1": "Issued Jun 2023"
+        }
+      ],
+      "volunteering": [
+        {
+          "title": "Coordinated Mozilla Fire Fox Seminars at multiple places",
+          "subtitle": "Collages in Bhopal",
+          "meta_1": "Mar 2012 - Jun 2013 \u00b7 1 yr 4 mos"
+        }
+      ],
+      "projects": [],
+      "honors_and_awards": [],
+      "languages": [
+        {
+          "title": "English"
+        },
+        {
+          "title": "Hindi"
+        }
+      ],
+      "publications": [],
+      "recommendations": [
+        {
+          "title": "Aaina Kapoor",
+          "subtitle": "Talent Acquisition Partner | Hiring Top Talent in Tech, Product & Business | Employer Branding Enthusiast",
+          "meta_1": "August 20, 2019,",
+          "meta_2": "Akrati"
+        }
       ]
     }
   },
@@ -151,7 +209,30 @@
       "skills": [
         "Instagram Marketing",
         "Personal Branding"
-      ]
+      ],
+      "licenses_and_certifications": [],
+      "volunteering": [],
+      "projects": [
+        {
+          "title": "Creative Product Shoot",
+          "subtitle": "Aug 2020 - Present",
+          "meta_1": "Check out some of our latest creative product shoots! From delicious mangoes and artisanal ghee to elegant accessories and eco-friendly notebooks, we bring your products to life with vibrant, engaging visuals. Whether it's food, fashion, or unique gifts, our team ensures every detail is captured to highlight your brand's essence.",
+          "meta_2": "Looking to showcase your products in the best light? Let's collaborate and create stunning visuals that make your brand stand out. Reach out to us for your next product shoot project!"
+        }
+      ],
+      "honors_and_awards": [],
+      "languages": [
+        {
+          "title": "English",
+          "subtitle": "Full professional proficiency"
+        },
+        {
+          "title": "Gujarati",
+          "subtitle": "Native or bilingual proficiency"
+        }
+      ],
+      "publications": [],
+      "recommendations": []
     }
   },
   {
@@ -188,7 +269,14 @@
       "skills": [
         "Flask",
         "GitHub"
-      ]
+      ],
+      "licenses_and_certifications": [],
+      "volunteering": [],
+      "projects": [],
+      "honors_and_awards": [],
+      "languages": [],
+      "publications": [],
+      "recommendations": []
     }
   },
   {
@@ -211,7 +299,14 @@
       ],
       "skills": [
         "Python (Programming Language)"
-      ]
+      ],
+      "licenses_and_certifications": [],
+      "volunteering": [],
+      "projects": [],
+      "honors_and_awards": [],
+      "languages": [],
+      "publications": [],
+      "recommendations": []
     }
   },
   {
@@ -231,7 +326,14 @@
           "subtitle": "2025 - 2029"
         }
       ],
-      "skills": []
+      "skills": [],
+      "licenses_and_certifications": [],
+      "volunteering": [],
+      "projects": [],
+      "honors_and_awards": [],
+      "languages": [],
+      "publications": [],
+      "recommendations": []
     }
   }
 ]

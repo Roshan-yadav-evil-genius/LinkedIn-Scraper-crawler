@@ -65,6 +65,13 @@ def extract_data_from_html(html_content):
             "Education": "education",
             "Skills": "skills",
             "Interests": "interests",
+            "Licenses & certifications": "licenses_and_certifications",
+            "Volunteering": "volunteering_experience",
+            "Projects": "projects",
+            "Honors & awards": "honors_and_awards",
+            "Languages": "languages",
+            "Publications": "publications",
+            "Recommendations": "recommendations",
         }
         target_id = section_id_map.get(header_text)
         if target_id:
@@ -136,6 +143,35 @@ def extract_data_from_html(html_content):
     else:
         data["skills"] = []
 
+    # 8. Licenses & certifications
+    licenses_section = get_section_by_header("Licenses & certifications")
+    data["licenses_and_certifications"] = parse_list_items(licenses_section)
+
+    # 9. Volunteering
+    vol_section = get_section_by_header("Volunteering")
+    data["volunteering"] = parse_list_items(vol_section)
+
+    # 10. Projects
+    projects_section = get_section_by_header("Projects")
+    data["projects"] = parse_list_items(projects_section)
+
+    # 11. Honors & awards
+    honors_section = get_section_by_header("Honors & awards")
+    data["honors_and_awards"] = parse_list_items(honors_section)
+
+    # 12. Languages
+    languages_section = get_section_by_header("Languages")
+    data["languages"] = parse_list_items(languages_section)
+
+    # 13. Publications
+    publications_section = get_section_by_header("Publications")
+    data["publications"] = parse_list_items(publications_section)
+
+    # 14. Recommendations
+    # Recommendations structure is often specialized (Received/Given tabs), but list items might still work if present in DOM
+    recommendations_section = get_section_by_header("Recommendations")
+    data["recommendations"] = parse_list_items(recommendations_section)
+
     return data
 
 
@@ -187,7 +223,6 @@ def main():
                 }
             )
 
-    print(json.dumps(results, indent=2))
     with open("profile.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
 
