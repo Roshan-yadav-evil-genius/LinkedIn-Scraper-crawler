@@ -1,176 +1,65 @@
 import json
 import os
 import glob
-import sys
 import traceback
+import logging
 from scrapy import Selector
+
+from extractors.header import HeaderExtractor
+from extractors.metrics import MetricsExtractor
+from extractors.experience import ExperienceExtractor
+from extractors.education import EducationExtractor
+from extractors.section import SectionExtractor
+
+print("Starting extract_profile.py...")
+
+# Configure logging
+logging.basicConfig(
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    handlers=[logging.FileHandler("extraction.log"), logging.StreamHandler()],
+)
+logger = logging.getLogger(__name__)
 
 
 def extract_data_from_html(html_content):
     sel = Selector(text=html_content)
     data = {}
 
-    # 1. Name
-    data["name"] = (
-        sel.xpath('//h1[contains(@class, "text-heading-xlarge")]/text()')
-        .get(default="")
-        .strip()
+    # 1. Header (Name, Headline, Location, About)
+    header_ext = HeaderExtractor(sel)
+    data.update(header_ext.extract())
+
+    # 2. Metrics (Followers, Connections)
+    metrics_ext = MetricsExtractor(sel)
+    data.update(metrics_ext.extract())
+
+    # 3. Experience
+    exp_ext = ExperienceExtractor(sel)
+    data["experience"] = exp_ext.extract()
+
+    # 4. Education
+    edu_ext = EducationExtractor(sel)
+    data["education"] = edu_ext.extract()
+
+    # 5. Generic Sections (Skills, Projects, etc.)
+    # We can reuse SectionExtractor for these straightforward lists
+    section_ext = SectionExtractor(sel)
+
+    # Skills - slightly special handling in original, but let's try generic first
+    # Original extracted titles only.
+    skills_data = section_ext.extract_section(["Skills"])
+    data["skills"] = [s.get("title") for s in skills_data if s.get("title")]
+
+    data["licenses_and_certifications"] = section_ext.extract_section(
+        ["Licenses & certifications"]
     )
-    if not data["name"]:
-        data["name"] = sel.xpath("//h1//text()").get(default="").strip()
-
-    # 2. Headline
-    data["headline"] = (
-        sel.xpath(
-            '//div[contains(@class, "text-body-medium") and contains(@class, "break-words")]/text()'
-        )
-        .get(default="")
-        .strip()
-    )
-
-    # 3. Location
-    data["location"] = (
-        sel.xpath(
-            '//span[contains(@class, "text-body-small") and contains(@class, "inline") and contains(@class, "break-words")]/text()'
-        )
-        .get(default="")
-        .strip()
-    )
-
-    # 3.5 Followers and Connections
-    # Followers
-    followers_text = sel.xpath('//li//span[contains(text(), "followers")]/text()').get()
-    if not followers_text:
-        followers_text = sel.xpath(
-            '//*[contains(@class, "t-bold") and contains(text(), "followers")]/text()'
-        ).get()
-    data["followers"] = followers_text.strip() if followers_text else ""
-
-    # Connections
-    conn_count = sel.xpath(
-        '//span[contains(@class, "t-bold") and contains(text(), "500+")]/text()'
-    ).get()
-
-    if conn_count:
-        data["connections"] = f"{conn_count} connections"
-    else:
-        text_match = sel.xpath('//span[contains(text(), "connections")]/text()').get()
-        data["connections"] = text_match.strip() if text_match else ""
-
-    # Helper function to finding section by header text
-    def get_section_by_header(header_text):
-        section_id_map = {
-            "About": "about",
-            "Experience": "experience",
-            "Education": "education",
-            "Skills": "skills",
-            "Interests": "interests",
-            "Licenses & certifications": "licenses_and_certifications",
-            "Volunteering": "volunteering_experience",
-            "Projects": "projects",
-            "Honors & awards": "honors_and_awards",
-            "Languages": "languages",
-            "Publications": "publications",
-            "Recommendations": "recommendations",
-        }
-        target_id = section_id_map.get(header_text)
-        if target_id:
-            anchor = sel.xpath(f'//*[@id="{target_id}"]')
-            if anchor:
-                return anchor.xpath("./ancestor::section[1]")
-
-        header = sel.xpath(f'//h2//*[contains(text(), "{header_text}")]')
-        if header:
-            return header[0].xpath("./ancestor::section[1]")
-        return None
-
-    # 4. About
-    about_section = get_section_by_header("About")
-    if about_section:
-        texts = about_section.xpath(
-            './/div[contains(@class, "inline-show-more-text")]//span[@aria-hidden="true"]/text()'
-        ).getall()
-        if not texts:
-            texts = about_section.xpath(
-                './/div[contains(@class, "inline-show-more-text")]//text()'
-            ).getall()
-        data["about"] = " ".join([t.strip() for t in texts if t.strip()])
-    else:
-        summary_text = sel.xpath(
-            '//div[contains(@class, "pv-about__summary-text")]//text()'
-        ).getall()
-        if summary_text:
-            data["about"] = "".join(summary_text).strip()
-        else:
-            data["about"] = ""
-
-    # Helper to parse list items
-    def parse_list_items(section):
-        results = []
-        if not section:
-            return results
-
-        items = section.xpath('.//li[contains(@class, "artdeco-list__item")]')
-        for item in items:
-            texts = item.xpath('.//span[@aria-hidden="true"]/text()').getall()
-            texts = [t.strip() for t in texts if t.strip()]
-
-            entry = {}
-            if len(texts) >= 1:
-                entry["title"] = texts[0]
-            if len(texts) >= 2:
-                entry["subtitle"] = texts[1]
-            if len(texts) >= 3:
-                entry["meta_1"] = texts[2]
-            if len(texts) >= 4:
-                entry["meta_2"] = texts[3]
-            results.append(entry)
-        return results
-
-    # 5. Experience
-    exp_section = get_section_by_header("Experience")
-    data["experience"] = parse_list_items(exp_section)
-
-    # 6. Education
-    edu_section = get_section_by_header("Education")
-    data["education"] = parse_list_items(edu_section)
-
-    # 7. Skills
-    skills_section = get_section_by_header("Skills")
-    if skills_section:
-        skills_data = parse_list_items(skills_section)
-        data["skills"] = [s.get("title") for s in skills_data if s.get("title")]
-    else:
-        data["skills"] = []
-
-    # 8. Licenses & certifications
-    licenses_section = get_section_by_header("Licenses & certifications")
-    data["licenses_and_certifications"] = parse_list_items(licenses_section)
-
-    # 9. Volunteering
-    vol_section = get_section_by_header("Volunteering")
-    data["volunteering"] = parse_list_items(vol_section)
-
-    # 10. Projects
-    projects_section = get_section_by_header("Projects")
-    data["projects"] = parse_list_items(projects_section)
-
-    # 11. Honors & awards
-    honors_section = get_section_by_header("Honors & awards")
-    data["honors_and_awards"] = parse_list_items(honors_section)
-
-    # 12. Languages
-    languages_section = get_section_by_header("Languages")
-    data["languages"] = parse_list_items(languages_section)
-
-    # 13. Publications
-    publications_section = get_section_by_header("Publications")
-    data["publications"] = parse_list_items(publications_section)
-
-    # 14. Recommendations
-    # Recommendations structure is often specialized (Received/Given tabs), but list items might still work if present in DOM
-    recommendations_section = get_section_by_header("Recommendations")
-    data["recommendations"] = parse_list_items(recommendations_section)
+    data["volunteering"] = section_ext.extract_section(["Volunteering"])
+    data["projects"] = section_ext.extract_section(["Projects"])
+    data["honors_and_awards"] = section_ext.extract_section(["Honors & awards"])
+    data["languages"] = section_ext.extract_section(["Languages"])
+    data["publications"] = section_ext.extract_section(["Publications"])
+    data["recommendations"] = section_ext.extract_section(["Recommendations"])
 
     return data
 
@@ -190,19 +79,18 @@ def main():
         if os.path.exists(page_path):
             files = [page_path]
         else:
-            print(
-                json.dumps(
-                    {
-                        "error": "No profile HTML files found in profiles/ directory or page.html"
-                    }
-                )
-            )
+            error_msg = {
+                "error": "No profile HTML files found in profiles/ directory or page.html"
+            }
+            print(json.dumps(error_msg))
+            logger.error(error_msg["error"])
             return
 
     results = []
 
     for file_path in files:
         file_name = os.path.basename(file_path)
+        logger.info(f"Processing {file_name}...")
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
@@ -214,6 +102,7 @@ def main():
         except Exception as e:
             # Capture traceback for debugging
             tb = traceback.format_exc()
+            logger.error(f"Failed to process {file_name}: {e}")
             results.append(
                 {
                     "filename": file_name,
@@ -225,6 +114,8 @@ def main():
 
     with open("profile.json", "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2)
+
+    logger.info("Extraction complete. Results saved to profile.json")
 
 
 if __name__ == "__main__":

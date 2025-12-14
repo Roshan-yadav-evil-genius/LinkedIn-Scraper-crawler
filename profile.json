@@ -6,15 +6,17 @@
       "name": "Dr. DS Chauhan",
       "headline": "Director- Federation of Community Development and Academic Administrator",
       "location": "Chandigarh, India",
-      "followers": "1,016,561 followers",
-      "connections": "500+ connections",
-      "about": "",
+      "about": "#",
+      "followers": 1016561,
+      "connections": 500,
       "experience": [
         {
           "title": "NIMS University",
           "subtitle": "Full-time \u00b7 15 yrs 5 mos",
-          "meta_1": "Associate Professor",
-          "meta_2": "Apr 2023 - Present \u00b7 2 yrs 9 mos"
+          "meta_1": "Apr 2023 - Present \u00b7 2 yrs 9 mos",
+          "meta_2": "Mar 2020 - Present \u00b7 5 yrs 10 mos",
+          "meta_3": "Jaipur, Rajasthan, India",
+          "meta_4": "Sep 2017 - Present \u00b7 8 yrs 4 mos"
         },
         {
           "title": "Director",
@@ -35,7 +37,8 @@
           "meta_1": "2004 - 2009"
         },
         {
-          "title": "DAV College, Muzaffarnagar"
+          "title": "DAV College, Muzaffarnagar",
+          "subtitle": ""
         }
       ],
       "skills": [
@@ -53,13 +56,17 @@
           "title": "Dr Raghev Langeh",
           "subtitle": "Entrepreneur I Education | Marketing | Admissions| Administration| Institutional SalesI OutReach Activities I Student Exchange",
           "meta_1": "May 1, 2020,",
-          "meta_2": "Dr. DS"
+          "meta_2": "Dr. DS",
+          "meta_3": "was Dr Raghev\u2019s mentor"
         },
         {
           "title": "Ritu Rathi",
           "subtitle": ".",
           "meta_1": "April 18, 2020,",
-          "meta_2": "Dr. DS"
+          "meta_2": "Dr. DS",
+          "meta_3": "worked with",
+          "meta_4": "Ritu",
+          "meta_5": "on the same team"
         }
       ]
     }
@@ -71,9 +78,9 @@
       "name": "Akrati Pandey",
       "headline": "Scrum Master",
       "location": "India",
-      "followers": "754,425 followers",
-      "connections": "500+ connections",
       "about": "Certified Scrum Master with strong experience owning all stages of the life cycle to deliver projects that exceed expectations on time and on budget. Skilled in using benchmarks, industry metrics, and innovative methodologies to manage sensitive projects with high-performing teams. Possess extensive knowledge in Agile, Scrum and Kanban, as well as SAFe and capable of driving an overwhelming adoption and enforcement of scrum rules and practices. Demonstrated ability to motivate, organize, lead, and coach leadership and product teams across multiple locations with a proven track record of driving complex projects. I am eager to join a highly collaborative and energetic team and believe my extensive knowledge and experience would benefit any team.",
+      "followers": 754425,
+      "connections": 500,
       "experience": [
         {
           "title": "Scrum Master",
@@ -88,7 +95,7 @@
         },
         {
           "title": "Project Manager Scrum Master",
-          "subtitle": "JivaForce Corporation  \u00b7 Full-time",
+          "subtitle": "JivaForce Corporation \u00b7 Full-time",
           "meta_1": "Aug 2022 - Mar 2024 \u00b7 1 yr 8 mos",
           "meta_2": "Pune, Maharashtra, India \u00b7 Hybrid"
         },
@@ -109,14 +116,12 @@
         {
           "title": "Confidential",
           "subtitle": "High School, PCM",
-          "meta_1": "2009 - 2010",
-          "meta_2": "Grade: 55.6"
+          "meta_1": "2009 - 2010"
         },
         {
           "title": "Confidential",
           "subtitle": "Bachelor\u2019s Degree, Computer Engineering",
-          "meta_1": "2010 - 2014",
-          "meta_2": "Grade: A"
+          "meta_1": "2010 - 2014"
         }
       ],
       "skills": [
@@ -146,10 +151,12 @@
       "honors_and_awards": [],
       "languages": [
         {
-          "title": "English"
+          "title": "English",
+          "subtitle": ""
         },
         {
-          "title": "Hindi"
+          "title": "Hindi",
+          "subtitle": ""
         }
       ],
       "publications": [],
@@ -158,7 +165,10 @@
           "title": "Aaina Kapoor",
           "subtitle": "Talent Acquisition Partner | Hiring Top Talent in Tech, Product & Business | Employer Branding Enthusiast",
           "meta_1": "August 20, 2019,",
-          "meta_2": "Akrati"
+          "meta_2": "Akrati",
+          "meta_3": "worked with",
+          "meta_4": "Aaina",
+          "meta_5": "but on different teams"
         }
       ]
     }
@@ -170,9 +180,9 @@
       "name": "Shivani Khatri",
       "headline": "23x LinkedIn Top Voice | Saved \u20b91M+ in ad spends | 2X Marketing ROI with organic content | Helping founders to scale up business | Brand Strategist | Social Media Marketing | PPC Expert | Branding",
       "location": "Ahmedabad, Gujarat, India",
-      "followers": "30,558 followers",
-      "connections": "500+ connections",
-      "about": "PPC Specialist | Digital Marketing | Personal Branding | Content creation & Shoots | Meta Ads | Business Strategy | Marketing Strategy | Social Media Marketing | Google Ads | Brand Strategist | Performance Marketing | Branding - rebranding | Graphic designing | Product Photography Helping businesses from concept to execution! Have a business idea? Lets connect!",
+      "about": "PPC Specialist | Digital Marketing | Personal Branding | Content creation & Shoots | Meta Ads | Business Strategy | Marketing Strategy | Social Media Marketing | Google Ads | Brand Strategist | Performance Marketing | Branding - rebranding | Graphic designing | Product Photography",
+      "followers": 30558,
+      "connections": 500,
       "experience": [
         {
           "title": "Head of Digital Marketing",
@@ -182,7 +192,7 @@
         },
         {
           "title": "Creative Head",
-          "subtitle": "LTTRBX TECHNOLABS  \u00b7 Full-time",
+          "subtitle": "LTTRBX TECHNOLABS \u00b7 Full-time",
           "meta_1": "Mar 2024 - Sep 2024 \u00b7 7 mos",
           "meta_2": "Ahmedabad, Gujarat, India \u00b7 On-site"
         },
@@ -215,20 +225,20 @@
       "projects": [
         {
           "title": "Creative Product Shoot",
-          "subtitle": "Aug 2020 - Present",
-          "meta_1": "Check out some of our latest creative product shoots! From delicious mangoes and artisanal ghee to elegant accessories and eco-friendly notebooks, we bring your products to life with vibrant, engaging visuals. Whether it's food, fashion, or unique gifts, our team ensures every detail is captured to highlight your brand's essence.",
-          "meta_2": "Looking to showcase your products in the best light? Let's collaborate and create stunning visuals that make your brand stand out. Reach out to us for your next product shoot project!"
+          "subtitle": "Aug 2020 - Present"
         }
       ],
       "honors_and_awards": [],
       "languages": [
         {
           "title": "English",
-          "subtitle": "Full professional proficiency"
+          "subtitle": "Full professional proficiency",
+          "meta_1": "Full professional proficiency"
         },
         {
           "title": "Gujarati",
-          "subtitle": "Native or bilingual proficiency"
+          "subtitle": "Native or bilingual proficiency",
+          "meta_1": "Native or bilingual proficiency"
         }
       ],
       "publications": [],
@@ -242,28 +252,28 @@
       "name": "Roshan Yadav",
       "headline": "Associate Software Engineer | C++, Qt, Python, & SQL Specialist | Multithreaded Systems & Windows Platform Development",
       "location": "Jaipur, Rajasthan, India",
-      "followers": "12,894 followers",
-      "connections": "",
-      "about": "",
+      "about": "I am an Associate Software Engineer with 2 years of experience specializing in high-performance application development using C++, Qt, Python, and SQL. My expertise centers on Windows platforms, debugging, and engineering robust multithreaded systems.",
+      "followers": 12894,
+      "connections": 0,
       "experience": [
         {
           "title": "12th Wonder",
           "subtitle": "2 yrs 6 mos",
-          "meta_1": "Software Engineer",
-          "meta_2": "Full-time"
+          "meta_1": "Jan 2024 - Present \u00b7 2 yrs",
+          "meta_2": "Pune, Maharashtra, India \u00b7 On-site",
+          "meta_3": "Jan 2024 - Present \u00b7 2 yrs",
+          "meta_4": "Jul 2023 - Dec 2023 \u00b7 6 mos"
         },
         {
           "title": "Freelance Software Engineer",
           "subtitle": "Remote",
-          "meta_1": "Jun 2022 - Jun 2023 \u00b7 1 yr 1 mo",
-          "meta_2": "\u25cf Built web crawlers for 6 client websites (Python, Scrapy, Playwright) to automate large-scale data extraction and monitoring."
+          "meta_1": "Jun 2022 - Jun 2023 \u00b7 1 yr 1 mo"
         }
       ],
       "education": [
         {
           "title": "Chaudhary Charan Singh University",
-          "subtitle": "Bachelor of Technology, Electronics",
-          "meta_1": "75%"
+          "subtitle": "Bachelor of Technology, Electronics"
         }
       ],
       "skills": [
@@ -284,11 +294,11 @@
     "status": "success",
     "data": {
       "name": "Vandana Yadav",
-      "headline": "Engineering Visionary  Creating AI-Driven Farms That Think, Decide & Deliver",
+      "headline": "Engineering Visionary Creating AI-Driven Farms That Think, Decide & Deliver",
       "location": "Meerut, Uttar Pradesh, India",
-      "followers": "1,388 followers",
-      "connections": "",
-      "about": "Agriculture is facing a transformation. Rising costs, unpredictable weather, and labor shortages are forcing landowners and agri-businesses to rethink how farming works. I\u2019m building MotherFarm to meet that challenge head-on. MotherFarm is an autonomous farming ecosystem designed to make intelligent decisions from seed selection to crop scheduling  based on real-time environmental data. It\u2019s not just automation; it\u2019s a system that thinks, adapts, and delivers measurable outcomes. My goal is simple: to help agri-businesses turn uncertainty into opportunity by making their land smarter, more productive, and future-ready. If you're exploring how AI can drive ROI in agriculture \u2014 let's connect.",
+      "about": "Agriculture is facing a transformation. Rising costs, unpredictable weather, and labor shortages are forcing landowners and agri-businesses to rethink how farming works.",
+      "followers": 1388,
+      "connections": 0,
       "experience": [],
       "education": [
         {
@@ -316,14 +326,15 @@
       "name": "Mijat Xander Jysun Zhen",
       "headline": "Student at Universiti Sains Malaysia",
       "location": "Paya Terubong, Penang, Malaysia",
-      "followers": "111,340 followers",
-      "connections": "",
-      "about": "",
+      "about": "Java Full Stack Tech Lead @IBM | AWS Cloud, Python, Node.js, React | BPMN Automation | Learning Agentic AI & Generative Systems | Architecting Enterprise Apps | Passionate About Innovation",
+      "followers": 111340,
+      "connections": 0,
       "experience": [],
       "education": [
         {
           "title": "Universiti Sains Malaysia",
-          "subtitle": "2025 - 2029"
+          "subtitle": "2025 - 2029",
+          "meta_1": "2025 - 2029"
         }
       ],
       "skills": [],
