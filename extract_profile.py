@@ -1,17 +1,13 @@
 import json
+import os
+import glob
+import sys
+import traceback
 from scrapy import Selector
 
 
-def extract_profile():
-    try:
-        with open("page.html", "r", encoding="utf-8") as f:
-            html_content = f.read()
-    except FileNotFoundError:
-        print(json.dumps({"error": "page.html not found"}))
-        return
-
+def extract_data_from_html(html_content):
     sel = Selector(text=html_content)
-
     data = {}
 
     # 1. Name
@@ -42,25 +38,15 @@ def extract_profile():
     )
 
     # 3.5 Followers and Connections
-    # They are usually in a list ul.pv-top-card--list-bullet > li
-    # We look for text that contains 'followers' or 'connections'
-
     # Followers
     followers_text = sel.xpath('//li//span[contains(text(), "followers")]/text()').get()
-    # Sometimes it's inside a span that is inside the li
     if not followers_text:
         followers_text = sel.xpath(
             '//*[contains(@class, "t-bold") and contains(text(), "followers")]/text()'
         ).get()
-
     data["followers"] = followers_text.strip() if followers_text else ""
 
     # Connections
-    # Debug showed: <span class="t-black--light"> <span class="t-bold">500+</span> connections </span>
-    # Or similar structure.
-    # Let's try to grab the t-bold that specifically has a number or "500+" and check parent
-
-    # Text is "500+"
     conn_count = sel.xpath(
         '//span[contains(@class, "t-bold") and contains(text(), "500+")]/text()'
     ).get()
@@ -68,17 +54,11 @@ def extract_profile():
     if conn_count:
         data["connections"] = f"{conn_count} connections"
     else:
-        # Fallback if "500+" is not the case
         text_match = sel.xpath('//span[contains(text(), "connections")]/text()').get()
         data["connections"] = text_match.strip() if text_match else ""
 
     # Helper function to finding section by header text
     def get_section_by_header(header_text):
-        # Look for the header text inside an H2 or similar container roughly
-        # We look for any text node containing the header_text that is inside an element that looks like a header (e.g., inside 'pvs-header' or just H2)
-        # Using a broad search for the text within an id='...' or class='...' context is safer.
-
-        # Try finding the specific section by ID first (most reliable)
         section_id_map = {
             "About": "about",
             "Experience": "experience",
@@ -86,39 +66,29 @@ def extract_profile():
             "Skills": "skills",
             "Interests": "interests",
         }
-
         target_id = section_id_map.get(header_text)
         if target_id:
-            # Look for element with this id
             anchor = sel.xpath(f'//*[@id="{target_id}"]')
             if anchor:
                 return anchor.xpath("./ancestor::section[1]")
 
-        # Fallback: Search by visual text in H2
-        # Use translate to be case insensitive if needed, but usually capitalized
-        # //h2//span[contains(text(), ...)]
         header = sel.xpath(f'//h2//*[contains(text(), "{header_text}")]')
         if header:
             return header[0].xpath("./ancestor::section[1]")
-
         return None
 
     # 4. About
     about_section = get_section_by_header("About")
     if about_section:
-        # Standard location for text in About section
         texts = about_section.xpath(
             './/div[contains(@class, "inline-show-more-text")]//span[@aria-hidden="true"]/text()'
         ).getall()
         if not texts:
-            # Try getting all text in the show-more text div
             texts = about_section.xpath(
                 './/div[contains(@class, "inline-show-more-text")]//text()'
             ).getall()
-
         data["about"] = " ".join([t.strip() for t in texts if t.strip()])
     else:
-        # Try finding the summary text directly if section not found via header
         summary_text = sel.xpath(
             '//div[contains(@class, "pv-about__summary-text")]//text()'
         ).getall()
@@ -135,12 +105,10 @@ def extract_profile():
 
         items = section.xpath('.//li[contains(@class, "artdeco-list__item")]')
         for item in items:
-            # Extract distinct text blocks (aria-hidden=true for display)
             texts = item.xpath('.//span[@aria-hidden="true"]/text()').getall()
             texts = [t.strip() for t in texts if t.strip()]
 
             entry = {}
-            # Maps first few text items to fields. Structure varies but first is usually Title/School.
             if len(texts) >= 1:
                 entry["title"] = texts[0]
             if len(texts) >= 2:
@@ -149,7 +117,6 @@ def extract_profile():
                 entry["meta_1"] = texts[2]
             if len(texts) >= 4:
                 entry["meta_2"] = texts[3]
-
             results.append(entry)
         return results
 
@@ -164,15 +131,64 @@ def extract_profile():
     # 7. Skills
     skills_section = get_section_by_header("Skills")
     if skills_section:
-        # Skills list usually just has titles in the list items
         skills_data = parse_list_items(skills_section)
-        # Extract just the title part
         data["skills"] = [s.get("title") for s in skills_data if s.get("title")]
     else:
         data["skills"] = []
 
-    print(json.dumps(data, indent=2))
+    return data
+
+
+def main():
+    base_dir = os.path.dirname(os.path.abspath(__file__))
+    profiles_dir = os.path.join(base_dir, "profiles")
+    pattern = os.path.join(profiles_dir, "*.html")
+    files = glob.glob(pattern)
+
+    # Sort files to ensure deterministic order
+    files.sort()
+
+    if not files:
+        # Fallback to local page.html
+        page_path = os.path.join(base_dir, "page.html")
+        if os.path.exists(page_path):
+            files = [page_path]
+        else:
+            print(
+                json.dumps(
+                    {
+                        "error": "No profile HTML files found in profiles/ directory or page.html"
+                    }
+                )
+            )
+            return
+
+    results = []
+
+    for file_path in files:
+        file_name = os.path.basename(file_path)
+        try:
+            with open(file_path, "r", encoding="utf-8") as f:
+                content = f.read()
+
+            extracted_data = extract_data_from_html(content)
+            results.append(
+                {"filename": file_name, "status": "success", "data": extracted_data}
+            )
+        except Exception as e:
+            # Capture traceback for debugging
+            tb = traceback.format_exc()
+            results.append(
+                {
+                    "filename": file_name,
+                    "status": "error",
+                    "error": str(e),
+                    "traceback": tb,
+                }
+            )
+
+    print(json.dumps(results, indent=2))
 
 
 if __name__ == "__main__":
-    extract_profile()
+    main()
