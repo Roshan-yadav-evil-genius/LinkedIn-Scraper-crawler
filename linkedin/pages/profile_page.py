@@ -1,65 +1,56 @@
 from playwright.async_api import Page, Locator
+from .registries.profile_page_registry import PROFILE_PAGE_SELECTORS
+from linkedin.pages.base_page import BasePage
 
-class LinkedInProfilePage:
+class LinkedInProfilePage(BasePage):
     def __init__(self, page: Page):
-        self.page = page
+        super().__init__(page, PROFILE_PAGE_SELECTORS)
 
     def action_bar(self) -> Locator:
-        """
-        Locates the action bar section containing the Connect/Message/More buttons.
-        """
-        return self.page.locator(
-            "(//section[contains(@class,'artdeco-card')])[1]"
-            "//ul[.//li[contains(normalize-space(.),'connections')]]"
-            "/following-sibling::*[1]"
-        )
+        return self._get_locator("action_bar")
 
     def visible_buttons(self) -> Locator:
-        """
-        Returns all button elements within the action bar.
-        """
+        # This one is tricky as it depends on action_bar. 
+        # We can just assume action_bar locator works and append ' button'.
+        # Or define it in registry. Let's keep it relative for now.
         return self.action_bar().locator("button")
 
     def more_menu_trigger(self) -> Locator:
-        """
-        Returns the 'More' menu trigger button (usually an icon or logic relies on aria-label/text).
-        Often has artdeco-button--secondary or similar, but the user's xpath was specific.
-        Using the user's xpath logic:
-        """
-        return self.action_bar().locator("//div[@role='button' or @type='button'][.//span[contains(text(), 'More')]] | //button[contains(@aria-label, 'More')]").first
+        return self._get_locator("more_menu_trigger").first
 
     def connect_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Connect")
+        return self._get_locator("connect_button")
     
     def pending_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Pending")
+        return self._get_locator("pending_button")
 
     def message_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Message")
+        return self._get_locator("message_button")
     
     def follow_button(self) -> Locator:
-         return self.page.get_by_role("button", name="Follow")
+        return self._get_locator("follow_button")
     
     def following_button(self) -> Locator:
-         return self.page.get_by_role("button", name="Following")
+        return self._get_locator("following_button")
 
     def unfollow_button(self) -> Locator:
-        # Usually inside a menu, so might need handling
-        return self.page.get_by_role("button", name="Unfollow")
+        return self._get_locator("unfollow_button")
     
     def remove_connection_button(self) -> Locator:
-        # Inside menu
-        return self.page.get_by_role("button", name="Remove connection")
+        return self._get_locator("remove_connection_button")
 
     def dialog(self) -> Locator:
-        return self.page.locator("div[role='dialog']").first
+        return self._get_locator("dialog").first
 
     def add_note_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Add a note")
+        return self._get_locator("add_note_button")
 
     def send_without_note_button(self) -> Locator:
-        return self.page.get_by_role("button", name="Send without a note")
+        return self._get_locator("send_without_note_button")
     
     def send_button(self) -> Locator:
-        # After adding a note, the button might just be "Send"
-        return self.page.get_by_role("button", name="Send")
+        return self._get_locator("send_button")
+    
+    def message_input(self) -> Locator:
+        return self._get_locator("message_input")
+
