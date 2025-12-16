@@ -29,16 +29,8 @@ class BasePage:
         return locator
 
     def _create_single_locator(self, selector_def) -> Locator:
-        """Helper to parse registry item (dict vs string)"""
-        if isinstance(selector_def, dict):
-            # It's a role-based selector definition, e.g. {"role": "button", "name": "Connect"}
-            if "role" in selector_def:
-                return self.page.get_by_role(selector_def["role"], name=selector_def.get("name"))
-            # Can expand to get_by_label, get_by_text if needed
-            elif "text" in selector_def:
-                return self.page.get_by_text(selector_def["text"])
-        elif isinstance(selector_def, str):
-            # Assume it's an XPath or CSS selector
+        """Helper to parse registry item (only supports strings/XPaths now)"""
+        if isinstance(selector_def, str):
             return self.page.locator(selector_def)
         
-        raise ValueError(f"Unknown selector definition: {selector_def}")
+        raise ValueError(f"Strict XPath mode: Selector must be a string, got {type(selector_def)}: {selector_def}")
