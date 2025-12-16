@@ -1,7 +1,7 @@
 from playwright.async_api import Page
 from rich import print
 from linkedin.pages.profile_page import LinkedInProfilePage
-from linkedin.types import ConnectionStatus, FollowingStatus
+from linkedin.linkedin_types import ConnectionStatus, FollowingStatus
 
 class ConnectionWorkflow:
     def __init__(self, page: Page):
