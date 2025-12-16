@@ -3,7 +3,7 @@ from rich import print
 from linkedin.pages.profile_page import LinkedInProfilePage
 from linkedin.linkedin_types import ConnectionStatus, FollowingStatus
 
-class ConnectionWorkflow:
+class ProfilePageOperations:
     def __init__(self, page: Page):
         self.page = page
         self.profile = LinkedInProfilePage(page)

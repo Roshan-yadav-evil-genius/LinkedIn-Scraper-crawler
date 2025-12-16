@@ -4,7 +4,7 @@ from playwright.async_api import async_playwright
 from rich import print
 
 from linkedin.browser import launch_browser
-from linkedin.workflows.connection_workflow import ConnectionWorkflow
+from linkedin.operations.profile_page import ProfilePageOperations
 
 async def main():
     if sys.platform == "win32":
@@ -28,7 +28,7 @@ async def main():
             # For brevity, assuming we are logged in or can handle it manually if the persistent context is good.
             # Ideally, we'd have a LoginWorkflow or check here.
             
-            workflow = ConnectionWorkflow(page)
+            workflow = ProfilePageOperations(page)
             await workflow.execute()
 
             print("✅ Workflow completed.")
