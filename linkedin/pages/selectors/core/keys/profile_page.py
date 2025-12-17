@@ -2,7 +2,7 @@ from enum import Enum
 
 class ProfilePageKey(Enum):
     # Main Sections
-    ACTION_BAR = "action_bar"
+    PROFILE_CARD = "action_bar"
     
     # Buttons
     CONNECT_BUTTON = "connect_button"
@@ -14,7 +14,7 @@ class ProfilePageKey(Enum):
     REMOVE_CONNECTION_BUTTON = "remove_connection_button"
     
     # Menus
-    MORE_MENU_TRIGGER = "more_menu_trigger"
+    MORE_MENU_BUTTON = "more_menu_trigger"
     
     # Dialogs
     DIALOG = "dialog"

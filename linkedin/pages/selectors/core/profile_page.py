@@ -2,72 +2,64 @@ from .keys.profile_page import ProfilePageKey
 
 PROFILE_PAGE_SELECTORS = {
     # Main Profile Action Bar
-    ProfilePageKey.ACTION_BAR: [
+    ProfilePageKey.PROFILE_CARD: [
         "(//section[contains(@class,'artdeco-card')])[1]//ul[.//li[contains(normalize-space(.),'connections')]]/following-sibling::*[1]",
-        "//main/section[1]//div[contains(@class, 'ph5')]//div[contains(@class, 'mt2')]", # Fallback structural
     ],
     
     # Buttons (Connect, Message, etc.)
     ProfilePageKey.CONNECT_BUTTON: [
-        "//button[contains(@aria-label, 'Connect')]",
         "//button[.//span[text()='Connect']]",
-        "//button[text()='Connect']", 
+        "//div[@role='button'][.//span[text()='Connect']]",
     ],
     ProfilePageKey.PENDING_BUTTON: [
-         "//button[contains(@aria-label, 'Pending')]",
-         "//button[text()='Pending']",
+        "//button[.//span[text()='Pending']]",
+        "//div[@role='button'][.//span[text()='Pending']]",
     ],
     ProfilePageKey.MESSAGE_BUTTON: [
-        "//button[contains(@aria-label, 'Message')]",
-        "//button[text()='Message']",
+        "//button[.//span[text()='Message']]",
+        "//div[@role='button'][.//span[text()='Message']]",
     ],
     ProfilePageKey.FOLLOW_BUTTON: [
-        "//button[contains(@aria-label, 'Follow')]",
-        "//button[text()='Follow']",
+        "//button[.//span[text()='Follow']]",
+        "//div[@role='button'][.//span[text()='Follow']]",
     ],
     ProfilePageKey.FOLLOWING_BUTTON: [
-        "//button[contains(@aria-label, 'Following')]",
-        "//button[text()='Following']",
+        "//button[.//span[text()='Following']]",
+        "//div[@role='button'][.//span[text()='Following']]",
     ],
     
     # "More" Menu Trigger
-    ProfilePageKey.MORE_MENU_TRIGGER: [
-        "//div[@role='button' or @type='button'][.//span[contains(text(), 'More')]]",
-        "//button[contains(@aria-label, 'More')]",
-        "//button[.//span[contains(@class, 'artdeco-button__text')][text()='More']]",
+    ProfilePageKey.MORE_MENU_BUTTON: [
+        "//button[.//span[text()='More']]",
+        "//button[@aria-label='More actions']",
     ],
     
     # Menu Items
     ProfilePageKey.UNFOLLOW_BUTTON: [
+        "//button[.//span[text()='Unfollow']]",
         "//div[@role='button'][.//span[text()='Unfollow']]",
-        "//div[contains(@class, 'artdeco-dropdown__item')][.//span[text()='Unfollow']]",
     ],
     ProfilePageKey.REMOVE_CONNECTION_BUTTON: [
-         "//div[@role='button'][.//span[text()='Remove connection']]",
-         "//div[contains(@class, 'artdeco-dropdown__item')][.//span[text()='Remove connection']]",
+        "//button[.//span[text()='Remove connection']]",
+        "//div[@role='button'][.//span[text()='Remove connection']]",
     ],
 
     # Dialogs
     ProfilePageKey.DIALOG: [
-        "//div[@role='dialog']",
-        "//div[contains(@class, 'artdeco-modal')]",
+
     ],
     
     # Dialog Actions
     ProfilePageKey.ADD_NOTE_BUTTON: [
-        "//button[contains(@aria-label, 'Add a note')]",
-        "//button[text()='Add a note']",
+
     ],
     ProfilePageKey.SEND_WITHOUT_NOTE_BUTTON: [
-        "//button[contains(@aria-label, 'Send without a note')]",
-        "//button[text()='Send without a note']",
+
     ],
     ProfilePageKey.SEND_BUTTON: [
-         "//button[contains(@class, 'artdeco-button--primary')[.//span[text()='Send']]]",
-         "//button[text()='Send']",
+
     ],
      ProfilePageKey.MESSAGE_INPUT: [
-        "//textarea[@name='message']",
-        "//textarea[@id='custom-message']"
+
     ]
 }

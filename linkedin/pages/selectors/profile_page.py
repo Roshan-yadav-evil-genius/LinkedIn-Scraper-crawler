@@ -6,23 +6,24 @@ class LinkedInProfilePageSelectors(BasePage):
     def __init__(self, page: Page):
         super().__init__(page, PROFILE_PAGE_SELECTORS)
 
-    def action_bar(self) -> Locator:
-        return self._get_locator(ProfilePageKey.ACTION_BAR)
-
-    def visible_buttons(self) -> Locator:
-        return self.action_bar().locator("button")
+    def profile_card(self) -> Locator:
+        return self._get_locator(ProfilePageKey.PROFILE_CARD)
 
     def more_menu_trigger(self) -> Locator:
-        return self._get_locator(ProfilePageKey.MORE_MENU_TRIGGER).first
+        action_bar = self.profile_card()
+        return action_bar.locator(ProfilePageKey.MORE_MENU_BUTTON)
 
     def connect_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.CONNECT_BUTTON)
+        action_bar = self.profile_card()
+        return action_bar.locator(ProfilePageKey.CONNECT_BUTTON)
     
     def pending_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.PENDING_BUTTON)
+        action_bar = self.profile_card()
+        return action_bar.locator(ProfilePageKey.PENDING_BUTTON)
 
     def message_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.MESSAGE_BUTTON)
+        action_bar = self.profile_card()
+        return action_bar.locator(ProfilePageKey.MESSAGE_BUTTON)
     
     def follow_button(self) -> Locator:
         return self._get_locator(ProfilePageKey.FOLLOW_BUTTON)
