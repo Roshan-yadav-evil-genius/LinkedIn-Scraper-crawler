@@ -1,54 +1,93 @@
 from playwright.async_api import Page, Locator
-from .core.profile_page import ProfilePageKey, PROFILE_PAGE_SELECTORS
+from .core.profile_page import PROFILE_PAGE_SELECTORS
+from .core.keys.profile_page import ProfilePageKey
 from .base_page import BasePage
 
+
 class LinkedInProfilePageSelectors(BasePage):
+    """
+    Selector class for LinkedIn profile pages.
+    
+    Usage:
+        selectors = LinkedInProfilePageSelectors(page)
+        connect_btn = selectors.connect_button()
+        await connect_btn.click()
+    
+    The get() method is also available for less common selectors:
+        selectors.get(ProfilePageKey.REMOVE_CONNECTION_BUTTON)
+    """
+    
     def __init__(self, page: Page):
         super().__init__(page, PROFILE_PAGE_SELECTORS)
 
-    def profile_card(self) -> Locator:
-        return self._get_locator(ProfilePageKey.PROFILE_CARD)
-
-    def more_menu_trigger(self) -> Locator:
-        action_bar = self.profile_card()
-        return action_bar.locator(ProfilePageKey.MORE_MENU_BUTTON)
-
+    # ─────────────────────────────────────────────────────────────
+    # Connection Status Buttons
+    # ─────────────────────────────────────────────────────────────
+    
     def connect_button(self) -> Locator:
-        action_bar = self.profile_card()
-        return action_bar.locator(ProfilePageKey.CONNECT_BUTTON)
+        """Returns the Connect button locator."""
+        return self.get(ProfilePageKey.CONNECT_BUTTON)
     
     def pending_button(self) -> Locator:
-        action_bar = self.profile_card()
-        return action_bar.locator(ProfilePageKey.PENDING_BUTTON)
-
+        """Returns the Pending button locator."""
+        return self.get(ProfilePageKey.PENDING_BUTTON)
+    
     def message_button(self) -> Locator:
-        action_bar = self.profile_card()
-        return action_bar.locator(ProfilePageKey.MESSAGE_BUTTON)
+        """Returns the Message button locator."""
+        return self.get(ProfilePageKey.MESSAGE_BUTTON)
+
+    # ─────────────────────────────────────────────────────────────
+    # Action Buttons
+    # ─────────────────────────────────────────────────────────────
+    
+    def more_menu_button(self) -> Locator:
+        """Returns the More menu trigger button locator."""
+        return self.get(ProfilePageKey.MORE_MENU_BUTTON)
     
     def follow_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.FOLLOW_BUTTON)
+        """Returns the Follow button locator."""
+        return self.get(ProfilePageKey.FOLLOW_BUTTON)
     
-    def following_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.FOLLOWING_BUTTON)
-
     def unfollow_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.UNFOLLOW_BUTTON)
-    
-    def remove_connection_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.REMOVE_CONNECTION_BUTTON)
+        """Returns the Unfollow button locator."""
+        return self.get(ProfilePageKey.UNFOLLOW_BUTTON)
 
+    # ─────────────────────────────────────────────────────────────
+    # Dialog & Dialog Actions
+    # ─────────────────────────────────────────────────────────────
+    
     def dialog(self) -> Locator:
-        return self._get_locator(ProfilePageKey.DIALOG).first
+        """Returns the first visible dialog locator."""
+        return self.get(ProfilePageKey.DIALOG).first
+    
+    # ─────────────────────────────────────────────────────────────
+    #  Connection Request Dialog Actions
+    # ─────────────────────────────────────────────────────────────
 
     def add_note_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.ADD_NOTE_BUTTON)
-
-    def send_without_note_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.SEND_WITHOUT_NOTE_BUTTON)
+        """Returns the 'Add a note' button locator."""
+        return self.get(ProfilePageKey.ADD_NOTE_BUTTON)
     
+    def send_without_note_button(self) -> Locator:
+        """Returns the 'Send without a note' button locator."""
+        return self.get(ProfilePageKey.SEND_WITHOUT_NOTE_BUTTON)
+
+    # ─────────────────────────────────────────────────────────────
+    #  Connection Request with msg Dialog Actions
+    # ─────────────────────────────────────────────────────────────
+
     def send_button(self) -> Locator:
-        return self._get_locator(ProfilePageKey.SEND_BUTTON)
+        """Returns the Send button locator."""
+        return self.get(ProfilePageKey.SEND_BUTTON)
     
     def message_input(self) -> Locator:
-        return self._get_locator(ProfilePageKey.MESSAGE_INPUT)
+        """Returns the message textarea locator."""
+        return self.get(ProfilePageKey.MESSAGE_INPUT)
+    
+    # ─────────────────────────────────────────────────────────────
+    #  Withdraw Connection Request Dialog Actions
+    # ─────────────────────────────────────────────────────────────
 
+    def withdraw_button(self) -> Locator:
+        """Returns the Withdraw button locator."""
+        return self.get(ProfilePageKey.WITHDRAW_BUTTON)

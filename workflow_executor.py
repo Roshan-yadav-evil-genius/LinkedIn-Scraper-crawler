@@ -12,7 +12,7 @@ async def main():
         
         # Create a new page or use the first one if available (persistent context often has one)
         page = await context.new_page()
-        profile_url="https://www.linkedin.com/in/roshanyadavevilgenius/"
+        profile_url="https://www.linkedin.com/in/vandana-yadav-8a9b55282/"
         
         workflow = ProfilePage(page=page,profile_url=profile_url)
         await workflow.execute()
