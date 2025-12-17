@@ -8,7 +8,7 @@ logger = logging.getLogger(__name__)
 
 async def parse_linkedin_profile(context: BrowserContext):
     profile_url = "https://www.linkedin.com/in/roshan-yadav-4631272a8/"
-    output_path = "profiles/profile9.html"
+    output_path = "bin/profiles/profile9.html"
 
     logger.debug("Creating new page for profile parsing")
     page1 = await context.new_page()

@@ -28,24 +28,12 @@ def main():
     logger.info("Starting profile extraction")
 
     base_dir = os.path.dirname(os.path.abspath(__file__))
-    profiles_dir = os.path.join(base_dir, "profiles")
+    profiles_dir = os.path.join(base_dir, "bin/profiles")
     pattern = os.path.join(profiles_dir, "*.html")
     files = glob.glob(pattern)
 
     # Sort files to ensure deterministic order
     files.sort()
-
-    if not files:
-        # Fallback to local page.html
-        page_path = os.path.join(base_dir, "page.html")
-        if os.path.exists(page_path):
-            files = [page_path]
-            logger.debug("Using fallback page.html")
-        else:
-            logger.error("No profile HTML files found in profiles/ directory or page.html")
-            return
-
-    logger.info("Found %d HTML files to process", len(files))
 
     results = []
 
