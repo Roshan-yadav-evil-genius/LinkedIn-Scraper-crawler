@@ -3,13 +3,8 @@ import os
 import glob
 import traceback
 import logging
-from scrapy import Selector
 
-from extractors.header import HeaderExtractor
-from extractors.metrics import MetricsExtractor
-from extractors.experience import ExperienceExtractor
-from extractors.education import EducationExtractor
-from extractors.section import SectionExtractor
+from extractors import LinkedInProfileExtractor
 
 print("Starting extract_profile.py...")
 
@@ -17,51 +12,17 @@ print("Starting extract_profile.py...")
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s - %(levelname)s - %(message)s",
-    handlers=[logging.FileHandler("extraction.log"), logging.StreamHandler()],
 )
 logger = logging.getLogger(__name__)
 
 
-def extract_data_from_html(html_content):
-    sel = Selector(text=html_content)
-    data = {}
-
-    # 1. Header (Name, Headline, Location, About)
-    header_ext = HeaderExtractor(sel)
-    data.update(header_ext.extract())
-
-    # 2. Metrics (Followers, Connections)
-    metrics_ext = MetricsExtractor(sel)
-    data.update(metrics_ext.extract())
-
-    # 3. Experience
-    exp_ext = ExperienceExtractor(sel)
-    data["experience"] = exp_ext.extract()
-
-    # 4. Education
-    edu_ext = EducationExtractor(sel)
-    data["education"] = edu_ext.extract()
-
-    # 5. Generic Sections (Skills, Projects, etc.)
-    # We can reuse SectionExtractor for these straightforward lists
-    section_ext = SectionExtractor(sel)
-
-    # Skills - slightly special handling in original, but let's try generic first
-    # Original extracted titles only.
-    skills_data = section_ext.extract_section(["Skills"])
-    data["skills"] = [s.get("title") for s in skills_data if s.get("title")]
-
-    data["licenses_and_certifications"] = section_ext.extract_section(
-        ["Licenses & certifications"]
-    )
-    data["volunteering"] = section_ext.extract_section(["Volunteering"])
-    data["projects"] = section_ext.extract_section(["Projects"])
-    data["honors_and_awards"] = section_ext.extract_section(["Honors & awards"])
-    data["languages"] = section_ext.extract_section(["Languages"])
-    data["publications"] = section_ext.extract_section(["Publications"])
-    data["recommendations"] = section_ext.extract_section(["Recommendations"])
-
-    return data
+def extract_data_from_html(html_content: str) -> dict:
+    """
+    Extract profile data from HTML content.
+    Uses the new unified LinkedInProfileExtractor.
+    """
+    extractor = LinkedInProfileExtractor(html_content)
+    return extractor.extract()
 
 
 def main():

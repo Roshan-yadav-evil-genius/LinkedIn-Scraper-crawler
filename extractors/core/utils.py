@@ -15,3 +15,4 @@ def parse_int(text: str) -> int:
     # Remove commas and extract digits
     cleaned = re.sub(r"[^\d]", "", text)
     return int(cleaned) if cleaned else 0
+
