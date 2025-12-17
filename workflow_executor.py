@@ -14,8 +14,10 @@ async def main():
         page = await context.new_page()
         profile_url="https://www.linkedin.com/in/vandana-yadav-8a9b55282/"
         
-        workflow = ProfilePage(page=page,profile_url=profile_url)
-        await workflow.execute()
+        user_profile = ProfilePage(page=page,profile_url=profile_url)
+        await user_profile.load()
+        await user_profile.send_connection_request(note="")
+        await user_profile.follow_profile()
 
         print("✅ Workflow completed.")
         
