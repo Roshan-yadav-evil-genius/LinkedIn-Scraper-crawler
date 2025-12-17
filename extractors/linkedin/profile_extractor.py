@@ -1,7 +1,10 @@
+import logging
 from scrapy import Selector
 from typing import Optional, List, Dict, Any
 from extractors.core.utils import clean_text, parse_int
 from .selectors.profile import ProfileSelectors
+
+logger = logging.getLogger(__name__)
 
 
 class LinkedInProfileExtractor:
@@ -11,6 +14,7 @@ class LinkedInProfileExtractor:
     """
 
     def __init__(self, html: str):
+        logger.debug("Initializing LinkedInProfileExtractor with %d bytes of HTML", len(html))
         self.selector = Selector(text=html)
         self.selectors = ProfileSelectors(self.selector)
 
@@ -20,6 +24,7 @@ class LinkedInProfileExtractor:
 
     def extract(self) -> Dict[str, Any]:
         """Extract complete profile data."""
+        logger.info("Starting profile extraction")
         data = {}
 
         # Header (name, headline, location)
@@ -49,6 +54,10 @@ class LinkedInProfileExtractor:
         data["publications"] = self.extract_publications()
         data["recommendations"] = self.extract_recommendations()
 
+        # Count sections with data
+        sections_with_data = sum(1 for key, val in data.items() if val)
+        logger.info("Extraction complete - found %d sections with data", sections_with_data)
+
         return data
 
     # ═══════════════════════════════════════════════════════════════
@@ -57,15 +66,19 @@ class LinkedInProfileExtractor:
 
     def extract_header(self) -> Dict[str, str]:
         """Extract header: name, headline, location."""
+        logger.debug("Extracting header section")
         section = self.selectors.header_section()
         if not section:
+            logger.debug("Header section not found, returning empty values")
             return {"name": "", "headline": "", "location": ""}
 
-        return {
+        result = {
             "name": self._extract_first(self.selectors.name_xpaths(), section),
             "headline": self._extract_first(self.selectors.headline_xpaths(), section),
             "location": self._extract_first(self.selectors.location_xpaths(), section),
         }
+        logger.debug("Header extracted: name=%s", result.get("name", ""))
+        return result
 
     # ═══════════════════════════════════════════════════════════════
     # ABOUT EXTRACTION
@@ -73,20 +86,26 @@ class LinkedInProfileExtractor:
 
     def extract_about(self) -> str:
         """Extract about text from ABOUT_SECTION with global fallback."""
+        logger.debug("Extracting about section")
         # Try section-based extraction first
         section = self.selectors.about_section()
         if section:
             result = self._extract_first(self.selectors.about_xpaths(), section)
             if result:
+                logger.debug("About text extracted from section (%d chars)", len(result))
                 return result
 
         # Fallback: global search using original XPaths
+        logger.debug("Using global fallback for about section")
         global_about_xpaths = [
             './/div[contains(@class, "inline-show-more-text")]//span[@aria-hidden="true"]/text()',
             '//div[contains(@class, "pv-about__summary-text")]//text()',
             '//*[@id="about"]//following-sibling::div//span[@aria-hidden="true"]/text()',
         ]
-        return self._extract_first(global_about_xpaths, self.selector)
+        result = self._extract_first(global_about_xpaths, self.selector)
+        if result:
+            logger.debug("About text extracted from global fallback (%d chars)", len(result))
+        return result
 
     # ═══════════════════════════════════════════════════════════════
     # METRICS EXTRACTION
@@ -94,6 +113,7 @@ class LinkedInProfileExtractor:
 
     def extract_metrics(self) -> Dict[str, int]:
         """Extract follower/connection counts."""
+        logger.debug("Extracting metrics (followers/connections)")
         followers_raw = self._extract_first(
             self.selectors.followers_xpaths(), self.selector
         )
@@ -101,10 +121,13 @@ class LinkedInProfileExtractor:
             self.selectors.connections_xpaths(), self.selector
         )
 
-        return {
+        result = {
             "followers": parse_int(followers_raw),
             "connections": parse_int(connections_raw),
         }
+        logger.debug("Metrics extracted: followers=%d, connections=%d",
+                     result["followers"], result["connections"])
+        return result
 
     # ═══════════════════════════════════════════════════════════════
     # SECTION EXTRACTORS
@@ -112,54 +135,84 @@ class LinkedInProfileExtractor:
 
     def extract_experience(self) -> List[Dict[str, Any]]:
         """Extract work experience."""
+        logger.debug("Extracting experience section")
         section = self.selectors.experience_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Experience section - found %d items", len(items))
+        return items
 
     def extract_education(self) -> List[Dict[str, Any]]:
         """Extract education history."""
+        logger.debug("Extracting education section")
         section = self.selectors.education_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Education section - found %d items", len(items))
+        return items
 
     def extract_skills(self) -> List[str]:
         """Extract skills as a flat list of titles."""
+        logger.debug("Extracting skills section")
         section = self.selectors.skills_section()
         items = self._extract_section_items(section)
-        return [item["title"] for item in items if item.get("title")]
+        skills = [item["title"] for item in items if item.get("title")]
+        logger.debug("Skills section - found %d skills", len(skills))
+        return skills
 
     def extract_certifications(self) -> List[Dict[str, Any]]:
         """Extract licenses and certifications."""
+        logger.debug("Extracting certifications section")
         section = self.selectors.certifications_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Certifications section - found %d items", len(items))
+        return items
 
     def extract_volunteering(self) -> List[Dict[str, Any]]:
         """Extract volunteering experience."""
+        logger.debug("Extracting volunteering section")
         section = self.selectors.volunteering_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Volunteering section - found %d items", len(items))
+        return items
 
     def extract_projects(self) -> List[Dict[str, Any]]:
         """Extract projects."""
+        logger.debug("Extracting projects section")
         section = self.selectors.projects_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Projects section - found %d items", len(items))
+        return items
 
     def extract_honors(self) -> List[Dict[str, Any]]:
         """Extract honors and awards."""
+        logger.debug("Extracting honors section")
         section = self.selectors.honors_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Honors section - found %d items", len(items))
+        return items
 
     def extract_languages(self) -> List[Dict[str, Any]]:
         """Extract languages."""
+        logger.debug("Extracting languages section")
         section = self.selectors.languages_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Languages section - found %d items", len(items))
+        return items
 
     def extract_publications(self) -> List[Dict[str, Any]]:
         """Extract publications."""
+        logger.debug("Extracting publications section")
         section = self.selectors.publications_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Publications section - found %d items", len(items))
+        return items
 
     def extract_recommendations(self) -> List[Dict[str, Any]]:
         """Extract recommendations."""
+        logger.debug("Extracting recommendations section")
         section = self.selectors.recommendations_section()
-        return self._extract_section_items(section)
+        items = self._extract_section_items(section)
+        logger.debug("Recommendations section - found %d items", len(items))
+        return items
 
     # ═══════════════════════════════════════════════════════════════
     # PRIVATE HELPERS
@@ -170,6 +223,7 @@ class LinkedInProfileExtractor:
     ) -> List[Dict[str, Any]]:
         """Extract list items from a section."""
         if section is None:
+            logger.debug("Section is None, returning empty list")
             return []
 
         items = []
@@ -226,4 +280,3 @@ class LinkedInProfileExtractor:
             if vals:
                 return [clean_text(v) for v in vals if clean_text(v)]
         return []
-

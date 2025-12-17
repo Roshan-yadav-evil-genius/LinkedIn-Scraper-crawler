@@ -1,13 +1,17 @@
+import logging
 from playwright.async_api import Page, Locator
-from rich import print
 from .selectors.profile_page import LinkedInProfilePageSelectors
 from urllib.parse import urlparse
 from enum import Enum
+
+logger = logging.getLogger(__name__)
+
 
 class ConnectionStatus(Enum):
     NOT_CONNECTED = "not_connected"
     CONNECTED = "connected"
     PENDING = "pending"
+
 
 class FollowingStatus(Enum):
     NOT_FOLLOWING = "not_following"
@@ -17,103 +21,109 @@ class FollowingStatus(Enum):
 class ProfilePage:
     def __init__(self, page: Page, profile_url: str):
         self.page = page
-    
+
         if not self._is_valid_linkedin_profile_url(profile_url):
+            logger.error("Invalid LinkedIn profile URL: %s", profile_url)
             raise ValueError("Invalid LinkedIn profile URL.")
-        
+
         self.profile_url = profile_url
         self.profile = LinkedInProfilePageSelectors(self.page)
-
+        logger.debug("Initialized ProfilePage for: %s", profile_url)
 
     # ─────────────────────────────────────────────────────────────
     # Public Methods
     # ─────────────────────────────────────────────────────────────
 
-
     async def load(self):
+        logger.debug("Loading profile page: %s", self.profile_url)
         await self.page.goto(self.profile_url, wait_until="load")
-    
-    
+        logger.info("Profile page loaded: %s", self.profile_url)
+
     async def follow_profile(self):
         following_status = await self._get_following_status()
+        logger.debug("Current following status: %s", following_status)
 
         if following_status == FollowingStatus.NOT_FOLLOWING:
-            print("🚀 Following profile...")
+            logger.info("Following profile")
             follow_btn = self.profile.follow_button()
             await self._click_or_expand_more_menu(follow_btn, "Follow")
         else:
-            print("✨ Already following.")
-    
+            logger.info("Already following this profile")
 
     async def unfollow_profile(self):
         following_status = await self._get_following_status()
-        print(f"Following Status: {following_status}")
+        logger.debug("Current following status: %s", following_status)
+
         if following_status == FollowingStatus.FOLLOWING:
-            print("🚀 Unfollowing profile...")
+            logger.info("Unfollowing profile")
             unfollow_btn = self.profile.unfollow_button()
             await self._click_or_expand_more_menu(unfollow_btn, "Unfollow")
 
-            dialog = await self._wait_for_dialog("clicking Pending")
+            dialog = await self._wait_for_dialog("clicking Unfollow")
             if not dialog:
                 return
             confirm_unfollow_btn = self.profile.dialog_unfollow_button()
             if await confirm_unfollow_btn.is_visible():
                 await confirm_unfollow_btn.click()
+                logger.info("Profile unfollowed successfully")
         else:
-            print("✨ Already unfollowing.")
-    
+            logger.info("Already not following this profile")
 
-    async def send_connection_request(self,note:str=""):
+    async def send_connection_request(self, note: str = ""):
         connection_status = await self._get_connection_status()
-
-        print(f"Connection Status: {connection_status}")
+        logger.debug("Current connection status: %s", connection_status)
 
         if connection_status == ConnectionStatus.NOT_CONNECTED:
+            logger.info("Sending connection request")
             await self._send_connection_request(note)
-        
-        print("Connection request sent successfully.")
-
+            logger.info("Connection request sent successfully")
+        else:
+            logger.info("Cannot send connection request - status is %s", connection_status)
 
     async def withdraw_connection_request(self):
         connection_status = await self._get_connection_status()
+        logger.debug("Current connection status: %s", connection_status)
+
         if connection_status != ConnectionStatus.PENDING:
-            print("❌ Not in 'Pending' state, cannot withdraw connection request.")
+            logger.warning("Cannot withdraw - not in Pending state (current: %s)", connection_status)
             return
-        
+
+        logger.info("Withdrawing connection request")
         pending_btn = self.profile.pending_button()
-        
+
         await self.page.wait_for_timeout(10000)
-        
+
         if not await self._click_or_expand_more_menu(pending_btn, "Pending"):
             return
-        
+
         dialog = await self._wait_for_dialog("clicking Pending")
         if not dialog:
             return
-        
+
         withdraw_btn = self.profile.withdraw_button()
         if await withdraw_btn.is_visible():
             await withdraw_btn.click()
+            logger.info("Connection request withdrawn successfully")
         else:
-            print("❌ Could not find 'Withdraw' button.")
+            logger.error("Could not find 'Withdraw' button")
 
-    
     # ─────────────────────────────────────────────────────────────
     # Private Methods
     # ─────────────────────────────────────────────────────────────
 
     async def _send_connection_request(self, note: str = ""):
         connect_btn = self.profile.connect_button()
-        
+
         if not await self._click_or_expand_more_menu(connect_btn, "Connect"):
             return
 
         dialog = await self._wait_for_dialog("clicking Connect")
         if not dialog:
-            print("❌ Connection dialog did not appear.")
+            logger.error("Connection dialog did not appear")
             return
 
         if note:
+            logger.debug("Sending connection request with note")
             add_note_btn = self.profile.add_note_button()
             if await add_note_btn.is_visible():
                 await add_note_btn.click()
@@ -121,14 +131,15 @@ class ProfilePage:
                 await self.page.wait_for_timeout(10000)
                 await self.profile.send_button().click()
             else:
-                print("⚠️ 'Add a note' button not found.")
+                logger.warning("'Add a note' button not found")
         else:
+            logger.debug("Sending connection request without note")
             await self.page.wait_for_timeout(10000)
             send_without_note_btn = self.profile.send_without_note_button()
             if await send_without_note_btn.is_visible():
                 await send_without_note_btn.click()
             else:
-                print("⚠️ 'Send without a note' button not found.")
+                logger.warning("'Send without a note' button not found")
 
     @staticmethod
     def _is_valid_linkedin_profile_url(profile_url: str) -> bool:
@@ -146,53 +157,54 @@ class ProfilePage:
 
         return len(paths) == 2 and paths[0] == "in"
 
-
     async def _click_or_expand_more_menu(self, button: Locator, button_name: str) -> bool:
         """
         Click button directly, or expand More menu first if needed.
-        
+
         Returns:
             True if button was clicked successfully, False otherwise.
         """
         if await button.is_visible():
+            logger.debug("Clicking '%s' button", button_name)
             await button.click()
             return True
-        
-        print(f"⚠️ '{button_name}' not visible, checking 'More' menu...")
+
+        logger.debug("Button '%s' not visible, expanding More menu", button_name)
         await self.profile.more_menu_button().click()
-        
+
         try:
             await button.wait_for(state="visible", timeout=5000)
             await button.click()
+            logger.debug("Clicked '%s' button from More menu", button_name)
             return True
-        except:
-            print(f"❌ Could not find '{button_name}' even in 'More' menu.")
+        except Exception:
+            logger.error("Could not find '%s' even in More menu", button_name)
             return False
-
 
     async def _wait_for_dialog(self, context: str = "action") -> Locator | None:
         """
         Wait for dialog to appear.
-        
+
         Args:
             context: Description of what triggered the dialog (for error message)
-            
+
         Returns:
             Dialog locator if found, None otherwise.
         """
+        logger.debug("Waiting for dialog after %s", context)
         dialog = self.profile.dialog()
         try:
             await dialog.wait_for(state="visible", timeout=5000)
+            logger.debug("Dialog appeared successfully")
             return dialog
-        except:
-            print(f"⚠️ No dialog appeared after {context}.")
+        except Exception:
+            logger.warning("Dialog did not appear after %s", context)
             return None
-
 
     async def _get_connection_status(self) -> ConnectionStatus:
         if await self.profile.connect_button().count():
             return ConnectionStatus.NOT_CONNECTED
-        
+
         if await self.profile.pending_button().count():
             return ConnectionStatus.PENDING
 

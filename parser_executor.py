@@ -6,8 +6,6 @@ import logging
 
 from extractors import LinkedInProfileExtractor
 
-print("Starting extract_profile.py...")
-
 # Configure logging
 logging.basicConfig(
     level=logging.INFO,
@@ -21,11 +19,14 @@ def extract_data_from_html(html_content: str) -> dict:
     Extract profile data from HTML content.
     Uses the new unified LinkedInProfileExtractor.
     """
+    logger.debug("Extracting data from HTML content (%d bytes)", len(html_content))
     extractor = LinkedInProfileExtractor(html_content)
     return extractor.extract()
 
 
 def main():
+    logger.info("Starting profile extraction")
+
     base_dir = os.path.dirname(os.path.abspath(__file__))
     profiles_dir = os.path.join(base_dir, "profiles")
     pattern = os.path.join(profiles_dir, "*.html")
@@ -39,19 +40,18 @@ def main():
         page_path = os.path.join(base_dir, "page.html")
         if os.path.exists(page_path):
             files = [page_path]
+            logger.debug("Using fallback page.html")
         else:
-            error_msg = {
-                "error": "No profile HTML files found in profiles/ directory or page.html"
-            }
-            print(json.dumps(error_msg))
-            logger.error(error_msg["error"])
+            logger.error("No profile HTML files found in profiles/ directory or page.html")
             return
+
+    logger.info("Found %d HTML files to process", len(files))
 
     results = []
 
     for file_path in files:
         file_name = os.path.basename(file_path)
-        logger.info(f"Processing {file_name}...")
+        logger.debug("Processing file: %s", file_name)
         try:
             with open(file_path, "r", encoding="utf-8") as f:
                 content = f.read()
@@ -60,10 +60,11 @@ def main():
             results.append(
                 {"filename": file_name, "status": "success", "data": extracted_data}
             )
+            logger.info("Successfully processed %s", file_name)
         except Exception as e:
             # Capture traceback for debugging
             tb = traceback.format_exc()
-            logger.error(f"Failed to process {file_name}: {e}")
+            logger.error("Failed to process %s: %s", file_name, e)
             results.append(
                 {
                     "filename": file_name,
