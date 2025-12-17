@@ -28,3 +28,6 @@ class ProfilePageKey(Enum):
 
     # Withdraw connection request dialog
     WITHDRAW_BUTTON = "withdraw_button"
+
+    # Unfollow confirmation dialog
+    DIALOG_UNFOLLOW_BUTTON = "dialog_unfollow_button"

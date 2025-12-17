@@ -4,7 +4,7 @@ from playwright.async_api import async_playwright
 from rich import print
 
 from browser import launch_browser
-from linkedin.pages import ProfilePage
+from automation.linkedin.profile_page import ProfilePage
 
 async def main():
     async with async_playwright() as p:
@@ -12,12 +12,14 @@ async def main():
         
         # Create a new page or use the first one if available (persistent context often has one)
         page = await context.new_page()
-        profile_url="https://www.linkedin.com/in/vandana-yadav-8a9b55282/"
+        profile_url="https://www.linkedin.com/in/roshanyadavevilgenius/"
         
         user_profile = ProfilePage(page=page,profile_url=profile_url)
         await user_profile.load()
-        await user_profile.send_connection_request(note="")
-        await user_profile.follow_profile()
+        # await user_profile.send_connection_request(note="")
+        await user_profile.unfollow_profile()
+        # await user_profile.withdraw_connection_request()
+        # await user_profile.follow_profile()
 
         print("✅ Workflow completed.")
         

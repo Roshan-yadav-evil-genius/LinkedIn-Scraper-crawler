@@ -91,3 +91,10 @@ class LinkedInProfilePageSelectors(BasePage):
     def withdraw_button(self) -> Locator:
         """Returns the Withdraw button locator."""
         return self.get(ProfilePageKey.WITHDRAW_BUTTON)
+
+    # ─────────────────────────────────────────────────────────────
+    #  Unfollow Dialog Actions
+    # ─────────────────────────────────────────────────────────────
+    def dialog_unfollow_button(self) -> Locator:
+        """Returns the Unfollow button locator within a dialog."""
+        return self.get(ProfilePageKey.DIALOG_UNFOLLOW_BUTTON)

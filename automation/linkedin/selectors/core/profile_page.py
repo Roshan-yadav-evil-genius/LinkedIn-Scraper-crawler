@@ -52,14 +52,14 @@ PROFILE_PAGE_SELECTORS = {
             "//button[.//span[text()='Unfollow']]",
             "//div[@role='button'][.//span[text()='Unfollow']]",
         ],
-        "parent": None
+        "parent": ProfilePageKey.PROFILE_CARD
     },
     ProfilePageKey.REMOVE_CONNECTION_BUTTON: {
         "selectors": [
             "//button[.//span[text()='Remove connection']]",
             "//div[@role='button'][.//span[text()='Remove connection']]",
         ],
-        "parent": None
+        "parent": ProfilePageKey.PROFILE_CARD
     },
 
     # Dialogs (global)
@@ -73,6 +73,14 @@ PROFILE_PAGE_SELECTORS = {
     ProfilePageKey.WITHDRAW_BUTTON: {
         "selectors": [
             "//button[.//span[text()='Withdraw']]",
+        ],
+        "parent": ProfilePageKey.DIALOG
+    },
+
+    ProfilePageKey.DIALOG_UNFOLLOW_BUTTON: {
+        "selectors": [
+            "//button[.//span[text()='Unfollow']]",
+            "//div[@role='button'][.//span[text()='Unfollow']]",
         ],
         "parent": ProfilePageKey.DIALOG
     },
